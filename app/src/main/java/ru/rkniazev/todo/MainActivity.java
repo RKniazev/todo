@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,14 +38,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void add(View view){
-        EditText text = this.findViewById(R.id.inpText);
 
-        if (!text.getText().toString().equals("")){
-            this.plan.add(new Plan(text.getText().toString()));
-            adapter.notifyItemInserted(this.plan.size()-1);
-        }
-
-        text.setText("");
+        Intent intent = new Intent(this.getApplicationContext(), AddActivity.class);
+        startActivity(intent);
     }
 
     private static final class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -63,30 +59,25 @@ public class MainActivity extends AppCompatActivity {
             ) {};
         }
 
-//        @Override
-//        public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int index) {
-//            TextView name = holder.itemView.findViewById(R.id.name);
-//            name.setText(this.items.get(index).getName());
-//            Button btnDel = (Button) holder.itemView.findViewById(R.id.del);
-//            btnDel.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    items.remove(index);
-//                    notifyDataSetChanged();
-//                }
-//            });
-//        }
-
         @Override
         public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int index) {
             TextView title = holder.itemView.findViewById(R.id.title);
+            TextView disc = holder.itemView.findViewById(R.id.disc);
             TextView created = holder.itemView.findViewById(R.id.created);
             final TextView finish = holder.itemView.findViewById(R.id.finish);
             final CheckBox done = holder.itemView.findViewById(R.id.done);
+            final Plan plan = Store.getStore().get(index);
 
-            final Plan plan = this.items.get(index);
             title.setText(plan.getName());
+            if (plan.getDiscription().getBytes().length < 50){
+                disc.setText(plan.getDiscription());
+            }else {
+                disc.setText(plan.getDiscription().substring(0,50) + " ...");
+            }
+
             created.setText(formatDateToString(plan.getCreated()));
+            finish.setText("");
+
             done.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton view, boolean checked) {
@@ -102,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return this.items.size();
+            return Store.getStore().getSize();
         }
 
         private String formatDateToString(Calendar calendar){

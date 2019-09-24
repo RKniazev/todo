@@ -5,19 +5,25 @@ import java.util.Objects;
 
 public class Plan {
     private String name;
+    private String disc;
     private Calendar created;
     private Calendar finish;
     private boolean done;
 
 
-    public Plan(String name){
+    public Plan(String name, String disc){
         this.name = name;
+        this.disc = disc;
         this.created = Calendar.getInstance();
         this.done = false;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getDiscription() {
+        return disc;
     }
 
     public void setName(String name) {
