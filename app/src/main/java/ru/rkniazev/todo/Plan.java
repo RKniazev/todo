@@ -1,12 +1,19 @@
 package ru.rkniazev.todo;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 public class Plan {
     private String name;
+    private Calendar created;
+    private Calendar finish;
+    private boolean done;
+
 
     public Plan(String name){
         this.name = name;
+        this.created = Calendar.getInstance();
+        this.done = false;
     }
 
     public String getName() {
@@ -15,6 +22,32 @@ public class Plan {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Calendar getCreated() {
+        return created;
+    }
+
+    public void setCreated(Calendar created) {
+        this.created = created;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+        if (done == true){
+            this.finish = Calendar.getInstance();
+        }
+        else {
+            this.finish = null;
+        }
+    }
+
+    public Calendar getFinish() {
+        return finish;
     }
 
     @Override
