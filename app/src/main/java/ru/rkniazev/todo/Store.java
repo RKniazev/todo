@@ -31,4 +31,9 @@ public class Store {
     public Plan get(int index){
         return this.items.get(index);
     }
+
+    public void update(int index, String name, String disc){
+        this.items.get(index).setName(name);
+        this.items.get(index).setDisc(disc);
+    }
 }

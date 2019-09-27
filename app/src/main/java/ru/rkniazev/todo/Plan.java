@@ -1,6 +1,7 @@
 package ru.rkniazev.todo;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 public class Plan {
@@ -29,9 +30,16 @@ public class Plan {
     public void setName(String name) {
         this.name = name;
     }
+    public  void setDisc(String disc) {
+        this.disc = disc;
+    }
 
     public Calendar getCreated() {
         return created;
+    }
+
+    public String getCreatedToString() {
+        return formatDateToString(created);
     }
 
     public void setCreated(Calendar created) {
@@ -56,6 +64,10 @@ public class Plan {
         return finish;
     }
 
+    public String getFinishToString() {
+        return formatDateToString(finish);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,5 +79,13 @@ public class Plan {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    private String formatDateToString(Calendar calendar){
+        return String.format(
+                Locale.getDefault(),"%02d.%02d.%d %02d:%02d",
+                calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE)
+        );
+
     }
 }
