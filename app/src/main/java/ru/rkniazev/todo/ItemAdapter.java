@@ -1,25 +1,18 @@
 package ru.rkniazev.todo;
 
-import android.content.ClipData;
-import android.content.Context;
+import android.app.Fragment;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public final class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private Context context;
-
-    public ItemAdapter(Context context) {
-        this.context = context;
-    }
 
     @NonNull
     @Override
@@ -31,18 +24,15 @@ public final class ItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int index) {
-        holder.itemView.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(context, ItemActivity.class);
-                        intent.putExtra("index", index);
-                        context.startActivity(intent);
-                    }
-                });
-
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int index) {
         TextView title = holder.itemView.findViewById(R.id.title);
+        holder.itemView.setOnClickListener(
+                view -> {
+                    Intent intent = new Intent(title.getContext(), ItemFragmentActivity.class);
+                    intent.putExtra("index", index);
+                    title.getContext().startActivity(intent);
+                }
+        );
         TextView disc = holder.itemView.findViewById(R.id.disc);
         TextView created = holder.itemView.findViewById(R.id.created);
         final TextView finish = holder.itemView.findViewById(R.id.finish);
