@@ -9,7 +9,6 @@ public class Store {
     private final List<Plan> items = new ArrayList<>();
 
     private Store(){
-
     }
 
     public static Store getStore() {
